@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WorldMemory;
 
 public class PlayerControllerTest : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class PlayerControllerTest : MonoBehaviour
             if (Input.GetKey(KeyCode.UpArrow))
                 pressedKeys.Add(KeyCode.UpArrow);
 
-            GameManager.WorldMemory.AddLog(new PlayerMemoryLog
+            GameManager.WorldMemory.AddLog(new PlayerMemoryWithKeyLog()
             {
                 TimeStamp = GameManager.CurrentTime,
                 OwnerName = gameObject.name,
@@ -95,7 +96,7 @@ public class PlayerControllerTest : MonoBehaviour
 
     private void performMemoryBasedActions()
     {
-        PlayerMemoryLog memoryLog = GameManager.GetNextMemoryLogFor(gameObject.name) as PlayerMemoryLog;
+        PlayerMemoryWithKeyLog memoryLog = GameManager.GetNextMemoryLogFor(gameObject.name) as PlayerMemoryWithKeyLog;
 
         if (memoryLog == null || memoryLog.IsAlive == false)
         {
@@ -152,5 +153,10 @@ public class PlayerControllerTest : MonoBehaviour
         {
             performMemoryBasedActions();
         }
+    }
+
+    public void OnEnterPortal()
+    {
+        Debug.Log("Enter");
     }
 }

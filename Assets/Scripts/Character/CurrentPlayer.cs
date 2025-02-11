@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
+using WorldMemory;
 
 namespace Character
 {
-    public class CurrentPlayer : Player
+    public class CurrentPlayer : Player, IPortalEnterable
     {
+        public GameObject PastPlayerPrefab;
+        
         protected override void Start()
         {
             base.Start();
@@ -12,20 +16,73 @@ namespace Character
         protected override void Update()
         {
             base.Update();
-            // Get input from arrow keys or WASD
-            movement = Input.GetAxisRaw("Horizontal");
-            if (Input.GetAxisRaw("Vertical") > 0)
+
+            bool haveAddedLog = false;
+            
+            float currentHorizontalMovement = Input.GetAxisRaw("Horizontal");
+            if (currentHorizontalMovement != horizontalMovement)
             {
-                if (isGrounded)
+                HorizontalMove(currentHorizontalMovement);
+                GameManager.WorldMemory.AddLog(new HorizontalMoveLog()
                 {
-                    isJumping = true;
-                }
+                    TimeStamp = GameManager.CurrentTime,
+                    OwnerName = gameObject.name,
+                    Position = transform.position,
+                    Direction = currentHorizontalMovement,
+                });
+                haveAddedLog = true;
+            }
+
+            if (Input.GetAxisRaw("Vertical") > 0 && isGrounded)
+            {
+                Jump();
+                GameManager.WorldMemory.AddLog(new JumpLog()
+                {
+                    TimeStamp = GameManager.CurrentTime,
+                    OwnerName = gameObject.name,
+                    Position = transform.position,
+                });
+                haveAddedLog = true;
+            }
+            
+            bool halfSecondPassed = Math.Floor(2 * GameManager.CurrentTime) != Math.Floor(2 * (GameManager.CurrentTime - Time.deltaTime));
+            if (!haveAddedLog && halfSecondPassed)
+            {
+                GameManager.WorldMemory.AddLog(new PositionLog()
+                {
+                    TimeStamp = GameManager.CurrentTime,
+                    OwnerName = gameObject.name,
+                    Position = transform.position,
+                });
             }
         }
 
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public void OnEnterPortal(Vector3 newPosition, int rewindTime)
+        {
+            GameManager.WorldMemory.AddLog(new DisappearLog()
+            {
+                TimeStamp = GameManager.CurrentTime,
+                OwnerName = gameObject.name,
+                Position = transform.position,
+            });
+
+            //to be edited
+            var newPastPlayer = Instantiate(PastPlayerPrefab);
+
+            newPastPlayer.tag = "Memory";
+            newPastPlayer.name = gameObject.name;
+            newPastPlayer.GetComponent<Player>().GameManager = GameManager;
+            newPastPlayer.GetComponent<SpriteRenderer>().enabled = false;
+
+            transform.position = newPosition;
+            gameObject.name = $"Player_{++GameManager.PlayerIteration}";
+
+            GameManager.RewindTime(rewindTime);
         }
     }
 }

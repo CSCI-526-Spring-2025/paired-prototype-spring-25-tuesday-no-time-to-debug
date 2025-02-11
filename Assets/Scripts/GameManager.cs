@@ -1,16 +1,17 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using WorldMemory;
 
 public class GameManager : MonoBehaviour
 {
-    public WorldMemory WorldMemory;
+    public WorldMemory.WorldMemory WorldMemory;
 
     public int PlayerIteration;
 
     public float CurrentTime;
 
-    public void rewindTime(int seconds)
+    public void RewindTime(int seconds)
     {
         CurrentTime = (float)(Math.Floor(2 * (CurrentTime - seconds)) / 2);
     }
@@ -19,6 +20,14 @@ public class GameManager : MonoBehaviour
     {
         return WorldMemory.GetLogsFor(ownerName)
             .Where(log => log.TimeStamp >= CurrentTime - Time.deltaTime)
+            .OrderBy(log => log.TimeStamp)
+            .ToArray();
+    }
+
+    public IMemoryLog[] GetMemoryByFrame(string ownerName)
+    {
+        return WorldMemory.GetLogsFor(ownerName)
+            .Where(log => log.TimeStamp >= CurrentTime && log.TimeStamp < CurrentTime + Time.deltaTime)
             .OrderBy(log => log.TimeStamp)
             .ToArray();
     }
@@ -36,6 +45,10 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+    }
+
+    void LateUpdate()
     {
         CurrentTime += Time.deltaTime;
     }

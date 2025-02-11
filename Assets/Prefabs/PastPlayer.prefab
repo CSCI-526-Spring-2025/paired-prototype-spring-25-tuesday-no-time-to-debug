@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3901932167895106493}
   - component: {fileID: 3043176691965795276}
   - component: {fileID: 6287249476550678968}
-  - component: {fileID: 2719520557483189721}
+  - component: {fileID: -234486179252701050}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PastPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2719520557483189721
+--- !u!114 &-234486179252701050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6742902848438497092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3e0f8a796d4c249e0067b9b83e4ce5, type: 3}
+  m_Script: {fileID: 11500000, guid: f511d54a072c4272bdc286d7f418c793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
@@ -176,4 +176,3 @@ MonoBehaviour:
   horizontalMaxSpeed: 8
   verticalForce: 25
   groundCheckBuffer: 0.05
-  PastPlayerPrefab: {fileID: 6742902848438497092, guid: 096950c4f768d1e4eacea19527514603, type: 3}
