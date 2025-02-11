@@ -9,22 +9,11 @@ namespace WorldMemory
         public string OwnerName { get; set; }
     }
     
-    public class PlayerMemoryWithKeyLog : IMemoryLog
-    {
-        public float TimeStamp { get; set; }
-        public string OwnerName { get; set; }
-        public Vector2 Position { get; set; }
-        public KeyCode[] KeysPressed { get; set; }
-        public bool IsAlive { get; set; }
-    }
-    
     public abstract class PlayerMemoryLog : IMemoryLog
     {
         public float TimeStamp { get; set; }
         public string OwnerName { get; set; }
         public Vector2 Position { get; set; }
-        // public KeyCode[] KeysPressed { get; set; }
-        // public bool IsAlive { get; set; }
 
         public abstract void Replay(Player player);
     }

@@ -53,6 +53,7 @@ namespace Character
                 rb.AddForce(new Vector2(0f, verticalForce), ForceMode2D.Impulse);
                 isGrounded = false;
                 isAboutToJump = false;
+                isJumping = true;
             }
         }
 
