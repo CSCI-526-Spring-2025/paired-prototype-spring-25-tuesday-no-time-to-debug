@@ -33,7 +33,7 @@ namespace Character
                 haveAddedLog = true;
             }
 
-            if (Input.GetAxisRaw("Vertical") > 0 && isGrounded)
+            if (Input.GetAxisRaw("Vertical") > 0 && isGrounded && !isAboutToJump && !isJumping)
             {
                 Jump();
                 GameManager.WorldMemory.AddLog(new JumpLog()

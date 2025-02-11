@@ -6,14 +6,15 @@ namespace Character
     public abstract class Player : MonoBehaviour
     {
         public GameManager GameManager;
-        
+
         public float horizontalForce = 50f; // Movement force
         public float horizontalMaxSpeed = 8f; // Movement max speed
         public float verticalForce = 25f; // Jumping force
 
         protected float horizontalMovement = 0;
         protected bool isGrounded;
-        private bool isJumping = false;
+        protected bool isAboutToJump = false;
+        protected bool isJumping = false;
 
         private Rigidbody2D rb;
         private BoxCollider2D boxCollider;
@@ -47,11 +48,11 @@ namespace Character
             }
 
             // perform jumping
-            if (isJumping)
+            if (isAboutToJump)
             {
                 rb.AddForce(new Vector2(0f, verticalForce), ForceMode2D.Impulse);
                 isGrounded = false;
-                isJumping = false;
+                isAboutToJump = false;
             }
         }
 
@@ -70,6 +71,8 @@ namespace Character
             RaycastHit2D hit3 = Physics2D.Raycast(groundCheckPoint3, Vector3.down,
                 groundCheckBuffer, platformMask);
             isGrounded = hit1.collider is not null || hit2.collider is not null || hit3.collider is not null;
+
+            isJumping = isJumping && isGrounded;
         }
 
         public void HorizontalMove(float direction)
@@ -79,7 +82,7 @@ namespace Character
 
         public void Jump()
         {
-                isJumping = true;
+            isAboutToJump = true;
         }
 
         public void Appear()
