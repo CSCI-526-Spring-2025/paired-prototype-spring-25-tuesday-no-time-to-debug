@@ -45,7 +45,7 @@ namespace Character
                 haveAddedLog = true;
             }
             
-            bool halfSecondPassed = Math.Floor(2 * GameManager.CurrentTime) != Math.Floor(2 * (GameManager.CurrentTime - Time.deltaTime));
+            bool halfSecondPassed = Math.Floor(10 * GameManager.CurrentTime) != Math.Floor(10 * (GameManager.CurrentTime - Time.deltaTime));
             if (!haveAddedLog && halfSecondPassed)
             {
                 GameManager.WorldMemory.AddLog(new PositionLog()
