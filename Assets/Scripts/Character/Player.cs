@@ -15,6 +15,7 @@ namespace Character
         protected bool isGrounded;
         protected bool isAboutToJump = false;
         protected bool isJumping = false;
+        protected bool isVisible = false;
 
         private Rigidbody2D rb;
         private BoxCollider2D boxCollider;
@@ -95,6 +96,7 @@ namespace Character
 
         public void Disappear()
         {
+            isVisible = false;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;

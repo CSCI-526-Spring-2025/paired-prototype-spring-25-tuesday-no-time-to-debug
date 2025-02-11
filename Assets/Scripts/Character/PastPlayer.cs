@@ -5,7 +5,6 @@ namespace Character
 {
     public class PastPlayer : Player
     {
-        private bool isVisible = false;
         protected override void Start()
         {
             base.Start();
