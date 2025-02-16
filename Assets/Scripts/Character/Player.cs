@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using WorldMemory;
 
 namespace Character
 {
@@ -17,7 +17,7 @@ namespace Character
         protected bool isJumping = false;
         protected bool isVisible = false;
 
-        private Rigidbody2D rb;
+        protected Rigidbody2D rb;
         private BoxCollider2D boxCollider;
 
         public float groundCheckBuffer = 0.05f;
@@ -32,7 +32,7 @@ namespace Character
 
         protected virtual void Update()
         {
-            GroundedCheck();
+            JumpStatusCheck();
         }
 
         protected virtual void FixedUpdate()
@@ -58,7 +58,7 @@ namespace Character
             }
         }
 
-        private void GroundedCheck()
+        private void JumpStatusCheck()
         {
             Vector2 groundCheckPoint1 = new Vector2(transform.position.x + boxCollider.bounds.size.x / 2,
                 transform.position.y - boxCollider.bounds.size.y / 2);
@@ -74,9 +74,17 @@ namespace Character
                 groundCheckBuffer, platformMask);
             isGrounded = hit1.collider is not null || hit2.collider is not null || hit3.collider is not null;
 
-            isJumping = isJumping && isGrounded;
+            isJumping = isJumping && rb.velocity.y > 0 && isGrounded;
         }
 
+        public void initStatesFromLog(PlayerMemoryLog log)
+        {
+            transform.position = new Vector3(log.Position[0], log.Position[1], 0);
+            rb.velocity = log.Velocity;
+            horizontalMovement = log.MovementDirection;
+        }
+
+        
         public void HorizontalMove(float direction)
         {
             horizontalMovement = direction;

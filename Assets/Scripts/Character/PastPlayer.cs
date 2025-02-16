@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using UnityEngine;
 using WorldMemory;
 
@@ -38,7 +38,7 @@ namespace Character
                 PlayerMemoryLog playerMemoryLog = memoryLog as PlayerMemoryLog;
                 if (!isVisible)
                 {
-                    transform.position = new Vector3(playerMemoryLog.Position[0], playerMemoryLog.Position[1], 0);
+                    initStatesFromLog(playerMemoryLog);
                     Appear();
                     isVisible = true;
 
