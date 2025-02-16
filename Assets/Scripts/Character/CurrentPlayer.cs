@@ -7,7 +7,7 @@ namespace Character
     public class CurrentPlayer : Player, IPortalEnterable
     {
         public GameObject PastPlayerPrefab;
-        
+
         protected override void Start()
         {
             base.Start();
@@ -18,7 +18,7 @@ namespace Character
             base.Update();
 
             bool haveAddedLog = false;
-            
+
             float currentHorizontalMovement = Input.GetAxisRaw("Horizontal");
             if (currentHorizontalMovement != horizontalMovement)
             {
@@ -28,7 +28,8 @@ namespace Character
                     TimeStamp = GameManager.CurrentTime,
                     OwnerName = gameObject.name,
                     Position = transform.position,
-                    Direction = currentHorizontalMovement,
+                    MovementDirection = horizontalMovement, 
+                    Velocity = rb.velocity
                 });
                 haveAddedLog = true;
             }
@@ -41,11 +42,14 @@ namespace Character
                     TimeStamp = GameManager.CurrentTime,
                     OwnerName = gameObject.name,
                     Position = transform.position,
+                    MovementDirection = horizontalMovement,
+                    Velocity = rb.velocity
                 });
                 haveAddedLog = true;
             }
-            
-            bool halfSecondPassed = Math.Floor(10 * GameManager.CurrentTime) != Math.Floor(10 * (GameManager.CurrentTime - Time.deltaTime));
+
+            bool halfSecondPassed = Math.Floor(10 * GameManager.CurrentTime) !=
+                                    Math.Floor(10 * (GameManager.CurrentTime - Time.deltaTime));
             if (!haveAddedLog && halfSecondPassed)
             {
                 GameManager.WorldMemory.AddLog(new PositionLog()
@@ -53,6 +57,8 @@ namespace Character
                     TimeStamp = GameManager.CurrentTime,
                     OwnerName = gameObject.name,
                     Position = transform.position,
+                    MovementDirection = horizontalMovement,
+                    Velocity = rb.velocity
                 });
             }
         }

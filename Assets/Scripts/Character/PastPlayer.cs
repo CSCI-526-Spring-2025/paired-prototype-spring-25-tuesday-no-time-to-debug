@@ -24,6 +24,7 @@ namespace Character
                 if (!isVisible)
                 {
                     transform.position = new Vector3(playerMemoryLog.Position[0], playerMemoryLog.Position[1], 0);
+                    rb.velocity = playerMemoryLog.Velocity;
                     Appear();
                     isVisible = true;
                 }
