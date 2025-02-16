@@ -84,10 +84,14 @@ namespace Character
             horizontalMovement = log.MovementDirection;
         }
 
-        
+
         public void HorizontalMove(float direction)
         {
             horizontalMovement = direction;
+            if (horizontalMovement != 0)
+            {
+                transform.localScale = new Vector3(horizontalMovement, transform.localScale.y, transform.localScale.z);
+            }
         }
 
         public void Jump()
