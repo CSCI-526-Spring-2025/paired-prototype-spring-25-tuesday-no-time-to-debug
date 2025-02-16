@@ -19,6 +19,7 @@ public class GoalFlag : MonoBehaviour
         if (other.CompareTag("Player"))  // Check if the Player collides
         {
             ShowLevelCompleteUI();
+            Time.timeScale = 0;
         }
     }
 

@@ -92,6 +92,9 @@ namespace Character
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+            GameObject visionTrigger = gameObject.transform.Find("Vision").gameObject;
+            visionTrigger.SetActive(true);
         }
 
         public void Disappear()
@@ -100,6 +103,13 @@ namespace Character
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+            GameObject visionTrigger = gameObject.transform.Find("Vision").gameObject;
+            visionTrigger.SetActive(false);
         }
+
+        public abstract void Shroud();
+
+        public abstract void UnShroud();
     }
 }

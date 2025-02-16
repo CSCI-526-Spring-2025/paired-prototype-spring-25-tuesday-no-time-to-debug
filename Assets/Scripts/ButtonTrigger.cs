@@ -17,7 +17,7 @@ public class ButtonTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !isPressed)
+        if ((other.CompareTag("Player") || other.CompareTag("Memory")) && !isPressed)
         {
             isPressed = true;
             LowerButton();
@@ -27,7 +27,7 @@ public class ButtonTrigger : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && isPressed)
+        if ((other.CompareTag("Player") || other.CompareTag("Memory")) && isPressed)
         {
             isPressed = false;
             RaiseButton();

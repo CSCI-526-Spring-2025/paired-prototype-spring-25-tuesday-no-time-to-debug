@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using WorldMemory;
 
 namespace Character
@@ -10,8 +11,22 @@ namespace Character
             base.Start();
         }
 
+        private bool ShouldPlayerBeShrouded(IMemoryLog[] allMemoryLogs)
+        {
+            IMemoryLog log = allMemoryLogs
+                .ToList()
+                .FindAll(log => log is ShroudLog || log is UnShroudLog)
+                .OrderBy(log => log.TimeStamp)
+                .FirstOrDefault();
+
+            if (log is null || log is ShroudLog) return false;
+
+            else return true;
+        }
+
         protected override void Update()
         {
+            IMemoryLog[] allMemoryLogs = GameManager.GetMemoryFor(gameObject.name);
             IMemoryLog[] memoryLogs = GameManager.GetMemoryByFrame(gameObject.name);
             if (memoryLogs is null || memoryLogs.Length == 0)
             {
@@ -26,6 +41,11 @@ namespace Character
                     transform.position = new Vector3(playerMemoryLog.Position[0], playerMemoryLog.Position[1], 0);
                     Appear();
                     isVisible = true;
+
+                    if (ShouldPlayerBeShrouded(allMemoryLogs))
+                    {
+                        Shroud();
+                    }
                 }
                 playerMemoryLog.Replay(this);
             }
@@ -34,6 +54,20 @@ namespace Character
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        public override void Shroud()
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            var vision = gameObject.transform.Find("Vision").gameObject;
+            vision.GetComponent<SpriteRenderer>().enabled = false;
+        }
+
+        public override void UnShroud()
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            var vision = gameObject.transform.Find("Vision").gameObject;
+            vision.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 }

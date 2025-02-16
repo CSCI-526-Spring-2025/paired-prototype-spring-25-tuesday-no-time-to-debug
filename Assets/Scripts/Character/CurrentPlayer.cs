@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using WorldMemory;
 
@@ -7,10 +8,33 @@ namespace Character
     public class CurrentPlayer : Player, IPortalEnterable
     {
         public GameObject PastPlayerPrefab;
-        
+
+        public bool isShrouded = false;
+
         protected override void Start()
         {
             base.Start();
+        }
+
+        private IEnumerator PerformShroud()
+        {
+            Shroud();
+            GameManager.WorldMemory.AddLog(new ShroudLog()
+            {
+                TimeStamp = GameManager.CurrentTime,
+                OwnerName = gameObject.name,
+                Position = transform.position,
+            });
+
+            yield return new WaitForSeconds(3f);
+
+            UnShroud();
+            GameManager.WorldMemory.AddLog(new UnShroudLog()
+            {
+                TimeStamp = GameManager.CurrentTime,
+                OwnerName = gameObject.name,
+                Position = transform.position,
+            });
         }
 
         protected override void Update()
@@ -44,7 +68,13 @@ namespace Character
                 });
                 haveAddedLog = true;
             }
-            
+
+            if (Input.GetKey(KeyCode.LeftShift) && !isShrouded)
+            {
+                StartCoroutine(PerformShroud());
+                haveAddedLog = true;
+            }
+
             bool halfSecondPassed = Math.Floor(10 * GameManager.CurrentTime) != Math.Floor(10 * (GameManager.CurrentTime - Time.deltaTime));
             if (!haveAddedLog && halfSecondPassed)
             {
@@ -77,12 +107,25 @@ namespace Character
             newPastPlayer.tag = "Memory";
             newPastPlayer.name = gameObject.name;
             newPastPlayer.GetComponent<Player>().GameManager = GameManager;
+
             newPastPlayer.GetComponent<SpriteRenderer>().enabled = false;
 
             transform.position = newPosition;
             gameObject.name = $"Player_{++GameManager.PlayerIteration}";
 
             GameManager.RewindTime(rewindTime);
+        }
+
+        public override void Shroud()
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0.5f);
+            isShrouded = true;
+        }
+
+        public override void UnShroud()
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 1);
+            isShrouded = false;
         }
     }
 }

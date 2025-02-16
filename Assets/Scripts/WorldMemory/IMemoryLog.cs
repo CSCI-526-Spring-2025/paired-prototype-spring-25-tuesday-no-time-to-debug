@@ -26,6 +26,22 @@ namespace WorldMemory
         }
     }
 
+    public class ShroudLog : PlayerMemoryLog
+    {
+        public override void Replay(Player player)
+        {
+            player.Shroud();
+        }
+    }
+
+    public class UnShroudLog : PlayerMemoryLog
+    {
+        public override void Replay(Player player)
+        {
+            player.UnShroud();
+        }
+    }
+
     public class HorizontalMoveLog : PlayerMemoryLog
     {
         // 1 or 0 or -1

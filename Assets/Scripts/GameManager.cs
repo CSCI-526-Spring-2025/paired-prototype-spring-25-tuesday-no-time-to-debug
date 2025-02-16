@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public IMemoryLog[] GetMemoryFor(string ownerName)
     {
         return WorldMemory.GetLogsFor(ownerName)
-            .Where(log => log.TimeStamp >= CurrentTime - Time.deltaTime)
+            .Where(log => log.TimeStamp >= CurrentTime)
             .OrderBy(log => log.TimeStamp)
             .ToArray();
     }
