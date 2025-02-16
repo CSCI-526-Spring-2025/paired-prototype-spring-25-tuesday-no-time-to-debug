@@ -18,10 +18,6 @@ public class GameManager : MonoBehaviour
 
     public void RewindTime(int seconds)
     {
-        foreach (PastPlayer pastPlayer in PastPlayers)
-        {
-            pastPlayer.Disappear();
-        }
         
         CurrentTime = (float)(Math.Floor(2 * (CurrentTime - seconds)) / 2);
 
@@ -32,10 +28,13 @@ public class GameManager : MonoBehaviour
         newPastPlayer.name = $"Player_{PlayerIteration}";
         newPastPlayer.GetComponent<Player>().GameManager = this;
 
-        newPastPlayer.GetComponent<SpriteRenderer>().enabled = false;
-
         PlayerIteration++;
         PastPlayers.Add(newPastPlayer.GetComponent<PastPlayer>());
+        
+        foreach (PastPlayer pastPlayer in PastPlayers)
+        {
+            pastPlayer.Disappear();
+        }
     }
 
     public IMemoryLog[] GetMemoryFor(string ownerName)

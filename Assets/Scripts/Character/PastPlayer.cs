@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using WorldMemory;
@@ -68,6 +69,21 @@ namespace Character
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
             var vision = gameObject.transform.Find("Vision").gameObject;
             vision.GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                CurrentPlayer player = other.gameObject.GetComponent<CurrentPlayer>();
+                if (!player.isShrouded)
+                {
+                    var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
+                    ob.SetActive(true);
+
+                    Time.timeScale = 0;
+                }
+            }
         }
     }
 }

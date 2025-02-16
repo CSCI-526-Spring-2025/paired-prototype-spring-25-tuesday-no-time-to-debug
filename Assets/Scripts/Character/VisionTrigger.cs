@@ -8,25 +8,25 @@ public class VisionTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        CurrentPlayer player = other.GetComponent<CurrentPlayer>();
-
-        if (other.CompareTag("Player") && player is not null && !player.isShrouded)
+        if (other.CompareTag("Player"))
         {
-            var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
-            ob.SetActive(true);
+            CurrentPlayer player = other.GetComponent<CurrentPlayer>();
+            if (!player.isShrouded)
+            {
+                var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
+                ob.SetActive(true);
 
-            Time.timeScale = 0;
+                Time.timeScale = 0;
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
