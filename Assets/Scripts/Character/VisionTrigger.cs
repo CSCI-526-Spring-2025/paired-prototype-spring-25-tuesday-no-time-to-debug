@@ -13,10 +13,9 @@ public class VisionTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        CurrentPlayer player = other.GetComponent<CurrentPlayer>();
 
-        bool isPlayerShrouded = other.gameObject.GetComponent<CurrentPlayer>().isShrouded;
-
-        if (other.CompareTag("Player") && !isPlayerShrouded)
+        if (other.CompareTag("Player") && player is not null && !player.isShrouded)
         {
             var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
             ob.SetActive(true);
