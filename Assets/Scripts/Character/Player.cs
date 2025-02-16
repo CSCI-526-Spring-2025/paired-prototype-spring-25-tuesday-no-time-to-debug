@@ -77,11 +77,13 @@ namespace Character
             isJumping = isJumping && rb.velocity.y > 0 && isGrounded;
         }
 
-        public void initStatesFromLog(PlayerMemoryLog log)
+        public void InitStatesFromLog(PlayerMemoryLog log)
         {
             transform.position = new Vector3(log.Position[0], log.Position[1], 0);
             rb.velocity = log.Velocity;
             horizontalMovement = log.MovementDirection;
+            transform.localScale = new Vector3(horizontalMovement < 0 ? -1 : 1,
+                transform.localScale.y, transform.localScale.z);
         }
 
 

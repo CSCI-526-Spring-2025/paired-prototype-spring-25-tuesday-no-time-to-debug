@@ -40,7 +40,7 @@ namespace Character
                 if (!isVisible)
                 {
                     Appear();
-                    initStatesFromLog(playerMemoryLog);
+                    InitStatesFromLog(playerMemoryLog);
                     isVisible = true;
 
                     if (ShouldPlayerBeShrouded(allMemoryLogs))
