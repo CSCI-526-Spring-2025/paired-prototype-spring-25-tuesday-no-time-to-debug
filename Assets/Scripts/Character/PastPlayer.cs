@@ -33,7 +33,7 @@ namespace Character
             {
                 return;
             }
-            
+
             foreach (IMemoryLog memoryLog in memoryLogs)
             {
                 PlayerMemoryLog playerMemoryLog = memoryLog as PlayerMemoryLog;
@@ -48,6 +48,7 @@ namespace Character
                         Shroud();
                     }
                 }
+
                 playerMemoryLog.Replay(this);
             }
         }
@@ -75,14 +76,10 @@ namespace Character
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                CurrentPlayer player = other.gameObject.GetComponent<CurrentPlayer>();
-                if (!player.isShrouded)
-                {
-                    var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
-                    ob.SetActive(true);
+                var ob = GameObject.Find("Canvas").transform.Find("YouLoseText").gameObject;
+                ob.SetActive(true);
 
-                    Time.timeScale = 0;
-                }
+                Time.timeScale = 0;
             }
         }
     }
