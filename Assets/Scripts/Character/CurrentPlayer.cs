@@ -7,12 +7,12 @@ namespace Character
 {
     public class CurrentPlayer : Player, IPortalEnterable
     {
-        public GameObject PastPlayerPrefab;
         public bool isShrouded = false;
 
         protected override void Start()
         {
             base.Start();
+            gameObject.name = $"Player_{GameManager.PlayerIteration}";
         }
 
         private IEnumerator PerformShroud()
@@ -106,20 +106,12 @@ namespace Character
                 OwnerName = gameObject.name,
                 Position = transform.position,
             });
-
-            //to be edited
-            var newPastPlayer = Instantiate(PastPlayerPrefab);
-
-            newPastPlayer.tag = "Memory";
-            newPastPlayer.name = gameObject.name;
-            newPastPlayer.GetComponent<Player>().GameManager = GameManager;
-
-            newPastPlayer.GetComponent<SpriteRenderer>().enabled = false;
-
+            
             transform.position = newPosition;
-            gameObject.name = $"Player_{++GameManager.PlayerIteration}";
 
             GameManager.RewindTime(rewindTime);
+            
+            gameObject.name = $"Player_{GameManager.PlayerIteration}";
         }
 
         public override void Shroud()

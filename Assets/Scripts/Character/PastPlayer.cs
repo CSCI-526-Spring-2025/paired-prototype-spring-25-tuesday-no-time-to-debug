@@ -38,8 +38,8 @@ namespace Character
                 PlayerMemoryLog playerMemoryLog = memoryLog as PlayerMemoryLog;
                 if (!isVisible)
                 {
-                    initStatesFromLog(playerMemoryLog);
                     Appear();
+                    initStatesFromLog(playerMemoryLog);
                     isVisible = true;
 
                     if (ShouldPlayerBeShrouded(allMemoryLogs))
