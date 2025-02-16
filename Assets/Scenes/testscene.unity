@@ -494,6 +494,10 @@ PrefabInstance:
       propertyPath: GameManager
       value: 
       objectReference: {fileID: 1692201627}
+    - target: {fileID: 2719520557483189721, guid: 73c1d94275b7fd045b015d5726450aeb, type: 3}
+      propertyPath: verticalForce
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 6742902848438497092, guid: 73c1d94275b7fd045b015d5726450aeb, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2014,6 +2018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldMemory: {fileID: 1124210470}
+  PastPlayerPrefab: {fileID: 6742902848438497092, guid: 096950c4f768d1e4eacea19527514603, type: 3}
   PlayerIteration: 0
   CurrentTime: 0
 --- !u!1 &1935352768

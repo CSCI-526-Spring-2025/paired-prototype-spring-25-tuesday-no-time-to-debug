@@ -2154,6 +2154,10 @@ PrefabInstance:
       propertyPath: WorldMemory
       value: 
       objectReference: {fileID: 1124210470}
+    - target: {fileID: 5293208849958848837, guid: 7b324257ca0dd06489cec2e95f1c0efe, type: 3}
+      propertyPath: PastPlayerPrefab
+      value: 
+      objectReference: {fileID: 6742902848438497092, guid: 096950c4f768d1e4eacea19527514603, type: 3}
     - target: {fileID: 5340999612493253238, guid: 7b324257ca0dd06489cec2e95f1c0efe, type: 3}
       propertyPath: m_Name
       value: Game Manager
