@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using WorldMemory;
 
 namespace Character
 {
@@ -77,6 +77,14 @@ namespace Character
             isJumping = isJumping && rb.velocity.y > 0 && isGrounded;
         }
 
+        public void initStatesFromLog(PlayerMemoryLog log)
+        {
+            transform.position = new Vector3(log.Position[0], log.Position[1], 0);
+            rb.velocity = log.Velocity;
+            horizontalMovement = log.MovementDirection;
+        }
+
+        
         public void HorizontalMove(float direction)
         {
             horizontalMovement = direction;

@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using WorldMemory;
+﻿using WorldMemory;
 
 namespace Character
 {
@@ -23,8 +22,7 @@ namespace Character
                 PlayerMemoryLog playerMemoryLog = memoryLog as PlayerMemoryLog;
                 if (!isVisible)
                 {
-                    transform.position = new Vector3(playerMemoryLog.Position[0], playerMemoryLog.Position[1], 0);
-                    rb.velocity = playerMemoryLog.Velocity;
+                    initStatesFromLog(playerMemoryLog);
                     Appear();
                     isVisible = true;
                 }

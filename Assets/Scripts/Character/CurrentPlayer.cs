@@ -52,7 +52,7 @@ namespace Character
                                     Math.Floor(10 * (GameManager.CurrentTime - Time.deltaTime));
             if (!haveAddedLog && halfSecondPassed)
             {
-                GameManager.WorldMemory.AddLog(new PositionLog()
+                GameManager.WorldMemory.AddLog(new StateLog()
                 {
                     TimeStamp = GameManager.CurrentTime,
                     OwnerName = gameObject.name,

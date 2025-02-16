@@ -21,7 +21,7 @@ namespace WorldMemory
         public abstract void Replay(Player player);
     }
 
-    public class PositionLog : PlayerMemoryLog
+    public class StateLog : PlayerMemoryLog
     {
         public override void Replay(Player player)
         {
